@@ -104,44 +104,46 @@ cp example_report.html ~/storage/downloads/
 
 ## Installation & Download Tutorial (Windows, Linux, Termux & Pardus)
 
+Archive extraction structure: `banner-collerator.zip` -> `banner-collerator/` -> `banner-correlator-v3/` (project files: `correlator.py`, `banner_correlator/`, `cve_rules.json`, `tests/`).
+
 ### 1. Windows
-1. Download `banner-correlator-v3.zip` from the repository releases or your downloads folder and extract it (e.g., to `C:\Users\<User>\banner-correlator-v3`).
-2. Open **PowerShell** or **Command Prompt** in the extracted folder and verify Python (3.10+):
+1. Download `banner-collerator.zip` and extract it (e.g., to `C:\Users\<User>\Downloads\banner-collerator.zip`).
+2. Open **PowerShell** or **Command Prompt** and enter the inner `banner-correlator-v3` directory:
    ```powershell
-   cd C:\Users\$env:USERNAME\banner-correlator-v3
+   cd "$env:USERPROFILE\Downloads\banner-collerator\banner-correlator-v3"
    python --version
    python -m unittest discover -s tests -v
    python correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
    ```
 
 ### 2. Linux (Debian / Ubuntu / General)
-1. Install `python3` and `unzip` if they are not already available, then extract the archive and run the test suite:
+1. Install `python3` and `unzip` if needed, extract `banner-collerator.zip`, and navigate to `banner-correlator/banner-correlator-v3`:
    ```bash
    sudo apt update && sudo apt install -y python3 unzip
-   unzip ~/Downloads/banner-correlator-v3.zip -d ~/
-   cd ~/banner-correlator-v3
+   unzip ~/Downloads/banner-collerator.zip -d ~/
+   cd ~/banner-collerator/banner-correlator-v3
    python3 -m unittest discover -s tests -v
    python3 correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
    ```
 
 ### 3. Termux (Android)
-1. Configure storage access once (`termux-setup-storage`), install `python` and `unzip`, copy the archive from `Downloads`, extract it, and run:
+1. Enable storage access (`termux-setup-storage`), install `python` and `unzip`, copy `banner-collerator.zip` from `Downloads`, extract it, and enter `banner-correlator/banner-correlator-v3`:
    ```bash
    termux-setup-storage
    pkg update && pkg install -y python unzip
-   cp ~/storage/downloads/banner-correlator-v3.zip ~/
-   unzip ~/banner-correlator-v3.zip -d ~/
-   cd ~/banner-correlator-v3
+   cp ~/storage/downloads/banner-collerator.zip ~/
+   unzip ~/banner-collerator.zip -d ~/
+   cd ~/banner-correlator/banner-correlator-v3
    python -m unittest discover -s tests -v
    python correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
    ```
 
 ### 4. Pardus
-1. Open the terminal, install `python3` and `unzip` via `apt`, extract the package, and run the verification/audit commands:
+1. Open a terminal, install `python3` and `unzip` via `apt`, extract `banner-collerator.zip`, and switch to `banner-correlator/banner-correlator-v3`:
    ```bash
    sudo apt update && sudo apt install -y python3 unzip
-   unzip ~/Downloads/banner-correlator-v3.zip -d ~/
-   cd ~/banner-correlator-v3
+   unzip ~/Downloads/banner-collerator.zip -d ~/
+   cd ~/banner-correlator/banner-correlator-v3
    python3 -m unittest discover -s tests -v
    python3 correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
    ```
