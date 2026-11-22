@@ -48,3 +48,107 @@ banner-correlator/
 ├── LICENSE                       # MIT License
 └── README.md                     # Documentation
 . 
+
+
+## Generating & Opening an HTML Report Locally
+
+`Banner Correlator` generates a self-contained, styled single-file **HTML report** using `--format html --output <file.html>`. The report includes scan timestamp, hygiene score, target host/IP, port, state, detected service, matched advisories, and banner details.
+
+### 1. Generate the HTML Report (TCP + UDP Example)
+```bash
+python correlator.py --host example.com --ports 80,443 --udp-ports 53,123,443,8080 --format html --output example_report.html --progress
+```
+
+### 2. Copy to Android Downloads (Termux)
+Once `termux-setup-storage` is configured, copy the report to your `Downloads` folder:
+```bash
+cp example_report.html ~/storage/downloads/
+```
+
+### 3. Open Locally
+* **In Mobile Browser / Files App:** Open `file:///sdcard/Download/example_report.html` in your browser, or tap `example_report.html` inside Android's **Files** app under **Downloads**.
+* **Via Local HTTP Server:** If your browser restricts local file URLs, start a temporary local server in Termux and open `[http://127.0.0.1:8080/example_report.html](http://127.0.0.1:8080/example_report.html)`:
+  ```bash
+  python -m http.server 8080 --bind 127.0.0.1
+  ```
+* **On Desktop:** Copy the file to your computer and double-click it or drag it into your browser window.
+
+---
+
+## CLI Reference
+
+| Flag | Description |
+| --- | --- |
+| `--host` | Authorized host, IP, or CIDR (repeatable) |
+| `--targets-file` | Path to a file containing newline-separated targets |
+| `--ports` | Comma-separated TCP ports or ranges (e.g., `22,80,8000-8002`) |
+| `--udp-ports` | Comma-separated UDP ports (e.g., `53,123`) |
+| `--profile` | Preset TCP port profile (`web`, `ssh-ftp`, `mail`, `db`, `common`) |
+| `--timeout` | Socket timeout in seconds (default: `2.0`) |
+| `--concurrency` | Maximum concurrent probes (default: `25`) |
+| `--jitter-ms` | Maximum random delay before each probe in milliseconds |
+| `--rules` | Path to advisory rules JSON file (repeatable) |
+| `--validate-rules` | Validate rule files and exit |
+| `--config` | Path to JSON configuration file |
+| `--format` | Output format (`table`, `json`, `md`, `csv`, `html`) |
+| `--output` | Write rendered output to a file |
+| `--sqlite` | Save scan history to a SQLite database file |
+| `--diff` | Compare current results against a previous JSON report |
+| `--only-matches` | Display only rows with findings or recommendations |
+| `--mask-hosts` | Mask host IP octets in output |
+| `--no-color` | Disable ANSI colors in table output |
+| `--progress` | Display progress counter and percentage on `stderr` |
+| `--fail-on-findings` | Exit with status code `1` if any rules match |
+
+---
+
+## Installation & Download Tutorial (Windows, Linux, Termux & Pardus)
+
+### 1. Windows
+1. Download `banner-correlator-v3.zip` from the repository releases or your downloads folder and extract it (e.g., to `C:\Users\<User>\banner-correlator-v3`).
+2. Open **PowerShell** or **Command Prompt** in the extracted folder and verify Python (3.10+):
+   ```powershell
+   cd C:\Users\$env:USERNAME\banner-correlator-v3
+   python --version
+   python -m unittest discover -s tests -v
+   python correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
+   ```
+
+### 2. Linux (Debian / Ubuntu / General)
+1. Install `python3` and `unzip` if they are not already available, then extract the archive and run the test suite:
+   ```bash
+   sudo apt update && sudo apt install -y python3 unzip
+   unzip ~/Downloads/banner-correlator-v3.zip -d ~/
+   cd ~/banner-correlator-v3
+   python3 -m unittest discover -s tests -v
+   python3 correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
+   ```
+
+### 3. Termux (Android)
+1. Configure storage access once (`termux-setup-storage`), install `python` and `unzip`, copy the archive from `Downloads`, extract it, and run:
+   ```bash
+   termux-setup-storage
+   pkg update && pkg install -y python unzip
+   cp ~/storage/downloads/banner-correlator-v3.zip ~/
+   unzip ~/banner-correlator-v3.zip -d ~/
+   cd ~/banner-correlator-v3
+   python -m unittest discover -s tests -v
+   python correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
+   ```
+
+### 4. Pardus
+1. Open the terminal, install `python3` and `unzip` via `apt`, extract the package, and run the verification/audit commands:
+   ```bash
+   sudo apt update && sudo apt install -y python3 unzip
+   unzip ~/Downloads/banner-correlator-v3.zip -d ~/
+   cd ~/banner-correlator-v3
+   python3 -m unittest discover -s tests -v
+   python3 correlator.py --host 127.0.0.1 --ports 22,80,443 --format table
+   ```
+
+
+## License
+
+Licensed under the **MIT License**. See `LICENSE` for details.
+
+
